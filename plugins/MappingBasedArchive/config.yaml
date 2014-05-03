@@ -1,0 +1,28 @@
+id: MappingBasedArchive
+name: MappingBasedArchive
+version: 0.01
+description: <__trans phrase="This plugin adds mapping based archive.">
+author_name: <__trans phrase="Taku AMANO">
+author_link: http://taaas.jp/
+plugin_link: https://github.com/usualoma/mt-plugin-MappingBasedArchive/
+
+l10n_class: MappingBasedArchive::L10N
+l10n_lexicon:
+  en_us:
+    MAPPING_BASED_ADV: "Path Based"
+  ja:
+    MAPPING_BASED_ADV: "パス別"
+
+schema_version: 0.04
+object_types:
+  mba_entry_map: MT::Plugin::MappingBasedArchive::EntryMap
+
+archive_types:
+  MappingBased: MT::ArchiveType::MappingBased
+
+callbacks:
+  build_file_filter: $MappingBasedArchive::MT::Plugin::MappingBasedArchive::TemplateMap::build_file_filter
+  MT::Entry::post_save: $MappingBasedArchive::MT::Plugin::MappingBasedArchive::Entry::post_save
+  MT::TemplateMap::pre_save: $MappingBasedArchive::MT::Plugin::MappingBasedArchive::TemplateMap::pre_save
+  MT::TemplateMap::post_save: $MappingBasedArchive::MT::Plugin::MappingBasedArchive::TemplateMap::post_save
+  MT::TemplateMap::post_remove: $MappingBasedArchive::MT::Plugin::MappingBasedArchive::TemplateMap::post_remove
