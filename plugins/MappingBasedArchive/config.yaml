@@ -21,8 +21,9 @@ archive_types:
   MappingBased: MT::ArchiveType::MappingBased
 
 callbacks:
-  build_file_filter: $MappingBasedArchive::MT::Plugin::MappingBasedArchive::TemplateMap::build_file_filter
-  MT::Entry::post_save: $MappingBasedArchive::MT::Plugin::MappingBasedArchive::Entry::post_save
-  MT::TemplateMap::pre_save: $MappingBasedArchive::MT::Plugin::MappingBasedArchive::TemplateMap::pre_save
-  MT::TemplateMap::post_save: $MappingBasedArchive::MT::Plugin::MappingBasedArchive::TemplateMap::post_save
-  MT::TemplateMap::post_remove: $MappingBasedArchive::MT::Plugin::MappingBasedArchive::TemplateMap::post_remove
+  MT::Entry::post_save: $MappingBasedArchive::MT::Plugin::MappingBasedArchive::Entry::rebuild_entry_map
+  MT::Entry::post_remove: $MappingBasedArchive::MT::Plugin::MappingBasedArchive::Entry::rebuild_entry_map
+  MT::TemplateMap::pre_save: $MappingBasedArchive::MT::Plugin::MappingBasedArchive::TemplateMap::cleanup_entry_map
+  MT::TemplateMap::post_remove: $MappingBasedArchive::MT::Plugin::MappingBasedArchive::TemplateMap::cleanup_entry_map
+  build_file_filter: $MappingBasedArchive::MT::Plugin::MappingBasedArchive::App::build_file_filter
+  rebuild_options: $MappingBasedArchive::MT::Plugin::MappingBasedArchive::App::rebuild_options

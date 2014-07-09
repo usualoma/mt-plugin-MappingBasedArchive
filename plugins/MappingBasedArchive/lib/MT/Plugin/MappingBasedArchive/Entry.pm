@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use utf8;
 
-sub post_save {
+sub rebuild_entry_map {
     my ( $cb, $obj ) = @_;
 
     my $blog = $obj->blog;
@@ -18,6 +18,10 @@ sub post_save {
     }
 
     my @entries = ($obj);
+    if (! MT->model('entry')->count($obj->id)) {
+        @entries = ();
+    }
+
     for my $obj (MT->model('templatemap')->load({
         blog_id => $obj->blog_id,
         archive_type => 'MappingBased',
