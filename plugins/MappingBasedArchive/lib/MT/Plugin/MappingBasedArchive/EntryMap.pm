@@ -14,14 +14,17 @@ __PACKAGE__->install_properties(
             entry_id       => 'integer not null',
             templatemap_id => 'integer not null',
             file           => 'string(255)',
+            title          => 'string(255)',
+            sort_data      => 'string(255)',
         },
 
         indexes => {
             'blog_file' => {
-                columns => [ 'blog_id', 'templatemap_id', 'file', 'entry_id' ],
+                columns =>
+                    [ 'blog_id', 'templatemap_id', 'file', 'entry_id' ],
                 unique => 1,
             },
-            'entry_id' => 1,
+            'entry_id'       => 1,
             'templatemap_id' => 1,
         },
 

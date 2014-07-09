@@ -6,16 +6,41 @@ author_name: <__trans phrase="Taku AMANO">
 author_link: http://taaas.jp/
 plugin_link: https://github.com/usualoma/mt-plugin-MappingBasedArchive/
 
-l10n_class: MappingBasedArchive::L10N
-l10n_lexicon:
-  en_us:
-    MAPPING_BASED_ADV: "Path Based"
-  ja:
-    MAPPING_BASED_ADV: "パス別"
+l10n_class: MT::Plugin::MappingBasedArchive::L10N
 
-schema_version: 0.04
+schema_version: 0.06
 object_types:
   mba_entry_map: MT::Plugin::MappingBasedArchive::EntryMap
+  templatemap:
+    ntm_name:
+      type: string
+      size: 255
+    ntm_title_template:
+      type: string
+      size: 255
+    ntm_sort_template:
+      type: string
+      size: 255
+
+tags:
+  function:
+    ArchiveLink: $MappingBasedArchive::MT::Plugin::MappingBasedArchive::Template::archive_link
+  block:
+    ArchiveList: $MappingBasedArchive::MT::Plugin::MappingBasedArchive::Template::archive_list
+    ArchivePrevious: $MappingBasedArchive::MT::Plugin::MappingBasedArchive::Template::archive_previous_next
+    ArchiveNext: $MappingBasedArchive::MT::Plugin::MappingBasedArchive::Template::archive_previous_next
+
+applications:
+  cms:
+    methods:
+      ntm_edit_template_map: $MappingBasedArchive::MT::Plugin::NamedTemplateMap::App::edit_template_map_dialog
+    callbacks:
+      rebuild_options: $MappingBasedArchive::MT::Plugin::MappingBasedArchive::App::rebuild_options
+      cms_post_save.template:
+        priority: 1
+        code: $MappingBasedArchive::MT::Plugin::NamedTemplateMap::App::post_save_template
+      template_param.edit_template: $MappingBasedArchive::MT::Plugin::NamedTemplateMap::App::param_edit_template
+      pre_run: $MappingBasedArchive::MT::Plugin::MappingBasedArchive::App::pre_run
 
 archive_types:
   MappingBased: MT::ArchiveType::MappingBased
@@ -26,4 +51,3 @@ callbacks:
   MT::TemplateMap::pre_save: $MappingBasedArchive::MT::Plugin::MappingBasedArchive::TemplateMap::cleanup_entry_map
   MT::TemplateMap::post_remove: $MappingBasedArchive::MT::Plugin::MappingBasedArchive::TemplateMap::cleanup_entry_map
   build_file_filter: $MappingBasedArchive::MT::Plugin::MappingBasedArchive::App::build_file_filter
-  rebuild_options: $MappingBasedArchive::MT::Plugin::MappingBasedArchive::App::rebuild_options

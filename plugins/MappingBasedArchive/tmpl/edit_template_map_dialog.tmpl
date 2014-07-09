@@ -1,0 +1,125 @@
+<mt:setvarblock name="page_title"><__trans phrase="Edit Template Map"></mt:setvarblock>
+
+<mt:include name="dialog/header.tmpl">
+
+<mt:If name="error">
+<mtapp:statusmsg
+   id="generic-error"
+   class="error"
+   can_close="0">
+  <mt:var name="error">
+</mtapp:statusmsg>
+</mt:If>
+
+<form>
+  <mtapp:setting
+     id="ntm_name"
+     label_class="top-label"
+     label="<__trans phrase="Name">">
+    <input type="text" name="ntm_name" id="ntm_name" value="<mt:Var name="ntm_name" encode_html="1" />" class="text full" />
+  </mtapp:setting>
+
+  <mtapp:setting
+     id="ntm_title_template"
+     label_class="top-label"
+     label="<__trans phrase="Title Template">">
+    <input type="text" name="ntm_title_template" id="ntm_title_template" value="<mt:Var name="ntm_title_template" encode_html="1" />" class="text full" />
+  </mtapp:setting>
+
+  <mtapp:setting
+     id="ntm_sort_template"
+     label_class="top-label"
+     label="<__trans phrase="Sort Template">"
+     hint="<__trans phrase="Archive files are sorted by this value.">"
+     show_hint="1">
+    <input type="text" name="ntm_sort_template" id="ntm_sort_template" value="<mt:Var name="ntm_sort_template" encode_html="1" />" class="text full" />
+  </mtapp:setting>
+
+  <mtapp:setting
+     id="file_template"
+     label_class="top-label"
+     label="<__trans phrase="Path">">
+    <input type="text" name="file_template" id="file_template" value="<mt:Var name="file_template" encode_html="1" />" readonly="readonly" class="text full" />
+  </mtapp:setting>
+
+  <script type="text/javascript">
+  jQuery(function($) {
+      var mapId = '<mt:Var name="templatemap_id" />',
+          containerId = 'templatemap_ntm_values_' + mapId,
+          m;
+
+      var $container = window.parent.jQuery('#' + containerId);
+      if ($container.length) {
+        jQuery('input[type=text]').not('[readonly]').each(function() {
+            var val = $container
+                          .find('input[name=templatemap_' + this.name + '_' + mapId + ']')
+                          .val();
+            $(this).val(val);
+        });
+      }
+
+      if (! $('#file_template').val()) {
+          var tmpl = window.parent.jQuery('#archive_file_tmpl_' + mapId).val();
+          $('#file_template').val(tmpl);
+
+          var tagRe = new RegExp('<' + 'mt:If\\s*tag="(\\w+)"[^>]*>(<' + 'mt:(\\w+).*?>)', 'i');
+          if (! $('#ntm_name').val()) {
+            if (m = tmpl.match(tagRe)) {
+                $('#ntm_name').val(m[3]);
+            }
+          }
+
+          if (! $('#ntm_title_template').val()) {
+            if (m = tmpl.match(tagRe)) {
+                $('#ntm_title_template').val(m[2]);
+            }
+          }
+
+          if (! $('#ntm_sort_template').val()) {
+            if (m = tmpl.match(tagRe)) {
+                $('#ntm_sort_template').val(m[2]);
+            }
+          }
+      }
+
+      $('#update-button').on('click', function(ev) {
+        ev.preventDefault();
+
+        $ = window.parent.jQuery;
+
+        $('#' + containerId).remove();
+
+        var $container = $('<div>', {id: containerId})
+            .appendTo($('#template-listing-form'));
+
+        jQuery('input[type=text]').not('[readonly]').each(function() {
+            $('<input>', {type: 'hidden', name: 'templatemap_' + this.name + '_' + mapId})
+                .val(this.value)
+                .appendTo($container);
+        });
+
+        $.fn.mtDialog.close();
+      });
+  });
+  </script>
+
+  <div class="actions-bar">
+    <button
+       type="submit"
+       id="update-button"
+       accesskey="s"
+       title="<__trans phrase="Update">"
+       class="upload action primary button">
+      <__trans phrase="Update">
+    </button>
+    <button
+       type="submit"
+       accesskey="x"
+       class="cancel action button mt-close-dialog"
+       title="<__trans phrase="Cancel (x)">">
+      <__trans phrase="Cancel">
+    </button>
+  </div>
+
+</form>
+<mt:include name="dialog/footer.tmpl" >

@@ -10,10 +10,18 @@ sub cleanup_entry_map {
     return 1 unless $obj->id;
     return 1 if $obj->archive_type ne 'MappingBased';
 
-    MT->model('templatemap')->count({
+    my $updated;
+    for my $k (qw(name sort_template title_template)) {
+        my $ck = "ntm_$k";
+        $updated ||= $obj->{changed_cols}->{$ck}
+            and last;
+    }
+    $updated ||= !MT->model('templatemap')->exist({
         id => $obj->id,
         file_template => $obj->file_template || '',
-    }) and return 1;
+    });
+
+    return 1 unless $updated;
 
     MT->model('mba_entry_map')->remove({
         templatemap_id => $obj->id,
