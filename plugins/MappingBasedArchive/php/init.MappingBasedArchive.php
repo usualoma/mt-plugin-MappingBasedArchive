@@ -41,12 +41,12 @@ class MappingBasedArchiver implements ArchiveType {
         $blog = $ctx->stash('blog');
 
         $archive_url = preg_replace('#^https?://[^/]*#', '', $blog->archive_url());
-        $path = str_replace($archive_url, '', $path);
+        $map_file = str_replace($archive_url, '', $fileinfo->url);
 
         $entry = new Entry;
         $entries = $entry->Find(
             'entry_blog_id = ' . $blog->blog_id .
-            ' AND mba_entry_map_file = "' . $db->escape($path) . '"' .
+            ' AND mba_entry_map_file = "' . $db->escape($map_file) . '"' .
             ' ORDER BY entry_authored_on DESC',
             false, false,
             array(
