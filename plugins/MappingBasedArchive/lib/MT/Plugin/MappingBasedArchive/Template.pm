@@ -50,8 +50,8 @@ sub archive_previous_next {
 
     my $tmp_entry_map
         = lc( $ctx->stash('tag') ) eq 'archiveprevious'
-        ? MT::ArchiveType::MappingBased->next_entry_map($entry_map)
-        : MT::ArchiveType::MappingBased->previous_entry_map($entry_map);
+        ? MT::ArchiveType::MappingBased->previous_entry_map($entry_map)
+        : MT::ArchiveType::MappingBased->next_entry_map($entry_map);
     local $ctx->{__stash}{mba_entry_map} = $tmp_entry_map;
     $tmp_entry_map
         ? $ctx->slurp( $args, $cond )
