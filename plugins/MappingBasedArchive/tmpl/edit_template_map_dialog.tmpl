@@ -65,7 +65,7 @@
           var tagRe = new RegExp('<' + 'mt:If\\s*tag="(\\w+)"[^>]*>(<' + 'mt:(\\w+).*?>)', 'i');
           if (! $('#ntm_name').val()) {
             if (m = tmpl.match(tagRe)) {
-                $('#ntm_name').val(m[3]);
+                $('#ntm_name').val(m[3] + 'Mapping');
             }
           }
 

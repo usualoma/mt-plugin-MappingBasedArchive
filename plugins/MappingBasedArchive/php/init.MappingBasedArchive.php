@@ -2,6 +2,7 @@
 
 require_once('archive_lib.php');
 require_once('class.mt_entry.php');
+require_once('class.mt_templatemap.php');
 require_once('class.mt_mba_entry_map.php');
 
 function mapping_based_archive_entry_map_cmp($a, $b) {
@@ -163,7 +164,17 @@ class MappingBasedArchiver implements ArchiveType {
 
         $map = $ctx->stash('mba_entry_map');
         if (! $map) {
-            return;
+            $templatemap_class = new TemplateMap();
+            $templatemaps = $templatemap_class->Find(
+                'templatemap_blog_id = ' . $ctx->stash('blog_id')
+                . ' AND templatemap_archive_type = "MappingBased"'
+            );
+
+            if (! $templatemaps) {
+                return;
+            }
+
+            $map = $templatemaps[0];
         }
 
         $blog = $ctx->stash('blog');

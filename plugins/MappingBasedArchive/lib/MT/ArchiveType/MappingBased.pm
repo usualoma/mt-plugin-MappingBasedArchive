@@ -186,7 +186,11 @@ sub archive_group_iter {
     my ( $ctx, $args ) = @_;
 
     my $templatemap = $ctx->stash('mba_templatemap')
-        or return sub { };
+        or MT->model('templatemap')->load(
+        {   blog_id      => $ctx->stash('blog_id'),
+            archive_type => 'MappingBased',
+        },
+        ) or return sub { };
 
     my $iter = $self->_mba_entry_maps_iter( $templatemap->id,
         $args->{sort_order} );
