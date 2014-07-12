@@ -136,7 +136,27 @@ class MappingBasedArchiver implements ArchiveType {
     public function get_range( $period_start ) {
         return array('', '');
     }
-    public function setup_args( &$args ) {}
+    public function setup_args( &$args ) {
+        $mt = MT::get_instance();
+        $ctx =& $mt->context();
+        $map = $ctx->stash('mba_entry_map');
+
+        if ($map) {
+            $db =& $mt->db();
+            $sql = "SELECT entry_id 
+                      FROM mt_entry
+                      INNER JOIN mt_mba_entry_map ON mba_entry_map_entry_id = entry_id
+                     WHERE entry_blog_id = " . $ctx->stash('blog_id') . "
+                       AND mba_entry_map_file = '" . $db->escape($map->file) . "'";
+            $results = $db->SelectLimit($sql);
+            $data = empty($results) ? array() : $results->GetArray();
+
+            $args['entry_ids'] = array();
+            foreach ($data as $d) {
+                $args['entry_ids'][] = $d[0];
+            }
+        }
+    }
     public function get_archive_link_sql( $ts, $at, $args ) {
         $mt = MT::get_instance();
         $ctx =& $mt->context();
@@ -175,27 +195,11 @@ class MappingBasedArchiver implements ArchiveType {
         $blog = $ctx->stash('blog');
 
         $archive_url = preg_replace('#^https?://[^/]*#', '', $blog->archive_url());
-        $map_file = $db->escape(str_replace($archive_url, '', $fileinfo->url));
-
-        $entry = new Entry;
-        $entries = $entry->Find(
-            'entry_blog_id = ' . $blog->blog_id .
-            ' AND mba_entry_map_file = "' . $map_file . '"' .
-            ' ORDER BY entry_authored_on DESC',
-            false, false,
-            array(
-                'join' => array(
-                    'mt_mba_entry_map' => array(
-                        'condition' => 'mba_entry_map_entry_id = entry_id',
-                    )
-                )
-            )
-        );
-        $ctx->stash('entries', $entries);
+        $map_file = str_replace($archive_url, '', $fileinfo->url);
 
         $mba_entry_map = new MBAEntryMap;
         $maps = $mba_entry_map->Find(
-            'mba_entry_map_file = "' . $map_file . '"',
+            'mba_entry_map_file = "' . $db->escape($map_file) . '"',
             false, false,
             array(
                 'limit' => 1
