@@ -30,7 +30,7 @@ http://screencast.com/t/BTpd3ofH3P
 
 ## Installation
 
-1. Download an [archive file](https://github.com/usualoma/mt-plugin-MappingBasedArchive/archive/master.zip).
+1. Download an archive file from [releases](https://github.com/usualoma/mt-plugin-MappingBasedArchive/releases).
 1. Unpack an archive file.
 1. Upload unpacked files to the MT `plugins` directory.
 
