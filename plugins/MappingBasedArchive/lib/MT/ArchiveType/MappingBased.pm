@@ -10,6 +10,10 @@ sub name {
     return 'MappingBased';
 }
 
+sub order {
+    return 200;
+}
+
 sub archive_label {
     return plugin()->translate('MAPPING_BASED_ADV');
 }
@@ -232,7 +236,7 @@ sub archive_entries_count {
     my $obj = shift;
     my ( $blog, $at, $entry ) = @_;
 
-    0;
+    1;
 }
 
 sub next_entry_map {

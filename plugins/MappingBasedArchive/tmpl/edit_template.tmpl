@@ -2,26 +2,25 @@
 <script type="text/javascript">
 jQuery(function($) {
     function addEditLink() {
-        $('#templatemap-listing-table td.archive-type').each(function() {
+        $('#templatemap-listing .mt-archivemapping').each(function() {
             var $this = $(this);
 
-            if ($this.find('.icon-ntm-edit').length !== 0) {
+            if ($this.find('.btn-ntm-edit').length !== 0) {
                 return false;
             }
 
-            $('<a>', {'href': '#', 'class': 'icon16 icon-ntm-edit'})
+            $('<button>', {'href': '#', 'class': 'btn btn-default button mt-edit-field-button btn-ntm-edit'})
                 .text('<__trans phrase="Edit" escape="js">')
                 .on('click', function() {
-                    var $this = $(this),
-                        blogId = $this.closest('form').find(':input[name=blog_id]').val(),
-                        templatemapId = $this.closest('tr').attr('id');
+                    var blogId = $this.closest('form').find(':input[name=blog_id]').val();
+                    var templatemapId = $this.find('select').attr('id').match(/(\d+$)/)[1];
 
-                    $.fn.mtDialog.open(
+                    $.fn.mtModal.open(
                         ScriptURI + '?__mode=ntm_edit_template_map&blog_id=' + blogId + '&templatemap_id=' + templatemapId
                     );
                     return false;
                 })
-                .prependTo($this);
+                .prependTo($this.find('.form-group').last());
         });
     }
     addEditLink();

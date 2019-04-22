@@ -12,7 +12,7 @@ sub param_edit_template {
 
     return 1 if !$blog;
 
-    my $after = $tmpl->getElementById('header_include');
+    my $after = $tmpl->getElementById('useful-links');
     foreach my $t ( @{ plugin()->load_tmpl('edit_template.tmpl')->tokens } ) {
         $tmpl->insertBefore( $t, $after );
     }
