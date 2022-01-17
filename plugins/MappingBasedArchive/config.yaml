@@ -1,6 +1,6 @@
 id: MappingBasedArchive
 name: MappingBasedArchive
-version: 0.01
+version: 0.02
 description: <__trans phrase="This plugin adds mapping based archive.">
 author_name: <__trans phrase="Taku AMANO">
 author_link: http://taaas.jp/
