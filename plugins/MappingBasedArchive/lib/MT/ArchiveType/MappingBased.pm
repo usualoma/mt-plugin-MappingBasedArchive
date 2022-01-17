@@ -236,7 +236,10 @@ sub archive_entries_count {
     my $obj = shift;
     my ( $blog, $at, $entry ) = @_;
 
-    1;
+    # XXX: Avoid unintentional deletion.
+    # There is a possibility that files will remain undeleted.
+    
+    2;
 }
 
 sub next_entry_map {
