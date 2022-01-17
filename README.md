@@ -96,13 +96,15 @@ Then, these archive files are output.
 
 
 ## Supported Publishing Types
+
 * Static publishing
 * Dynamic publishing
 
 
 ## Requirements
-* MT6
 
+* MT6
+* MT7
 
 ## LICENSE
 
