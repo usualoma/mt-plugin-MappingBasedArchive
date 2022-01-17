@@ -12,8 +12,13 @@ sub param_edit_template {
 
     return 1 if !$blog;
 
-    my $after = $tmpl->getElementById('header_include');
-    foreach my $t ( @{ plugin()->load_tmpl('edit_template.tmpl')->tokens } ) {
+    my $after = MT->version_number >= 7
+        ? $tmpl->getElementById('useful-links')
+        : $tmpl->getElementById('header_include');
+    my $plugin_tmpl = MT->version_number >= 7
+        ? 'edit_template.tmpl'
+        : 'edit_template.v6.tmpl';
+    foreach my $t ( @{ plugin()->load_tmpl($plugin_tmpl)->tokens } ) {
         $tmpl->insertBefore( $t, $after );
     }
 }
@@ -39,7 +44,10 @@ sub edit_template_map_dialog {
     $params{$_} = $map->$_
         for qw(file_template ntm_name ntm_title_template ntm_sort_template);
 
-    plugin()->load_tmpl( 'edit_template_map_dialog.tmpl', \%params );
+    my $plugin_tmpl = MT->version_number >= 7
+        ? 'edit_template_map_dialog.tmpl'
+        : 'edit_template_map_dialog.v6.tmpl';
+    plugin()->load_tmpl( $plugin_tmpl, \%params );
 }
 
 sub post_save_template {

@@ -1,38 +1,29 @@
 <mt:setvarblock name="page_title"><__trans phrase="Edit Template Map"></mt:setvarblock>
 
-<mt:setvarblock name="form_header">
-  <form>
-</mt:setvarblock>
+<mt:include name="dialog/header.tmpl">
 
-<mt:setvarblock name="form_footer">
-  </form>
-</mt:setvarblock>
-
-<mt:setvarblock name="modal_body">
 <mt:If name="error">
-<div id="msg-block">
 <mtapp:statusmsg
    id="generic-error"
    class="error"
    can_close="0">
   <mt:var name="error">
 </mtapp:statusmsg>
-</div>
 </mt:If>
 
-<div class="container-fluid">
+<form>
   <mtapp:setting
      id="ntm_name"
      label_class="top-label"
      label="<__trans phrase="Name">">
-    <input type="text" name="ntm_name" id="ntm_name" value="<mt:Var name="ntm_name" encode_html="1" />" class="form-control text full" />
+    <input type="text" name="ntm_name" id="ntm_name" value="<mt:Var name="ntm_name" encode_html="1" />" class="text full" />
   </mtapp:setting>
 
   <mtapp:setting
      id="ntm_title_template"
      label_class="top-label"
      label="<__trans phrase="Title Template">">
-    <input type="text" name="ntm_title_template" id="ntm_title_template" value="<mt:Var name="ntm_title_template" encode_html="1" />" class="form-control text full" />
+    <input type="text" name="ntm_title_template" id="ntm_title_template" value="<mt:Var name="ntm_title_template" encode_html="1" />" class="text full" />
   </mtapp:setting>
 
   <mtapp:setting
@@ -41,14 +32,14 @@
      label="<__trans phrase="Sort Template">"
      hint="<__trans phrase="Archive files are sorted by this value.">"
      show_hint="1">
-    <input type="text" name="ntm_sort_template" id="ntm_sort_template" value="<mt:Var name="ntm_sort_template" encode_html="1" />" class="form-control text full" />
+    <input type="text" name="ntm_sort_template" id="ntm_sort_template" value="<mt:Var name="ntm_sort_template" encode_html="1" />" class="text full" />
   </mtapp:setting>
 
   <mtapp:setting
      id="file_template"
      label_class="top-label"
      label="<__trans phrase="Path">">
-    <input type="text" name="file_template" id="file_template" value="<mt:Var name="file_template" encode_html="1" />" readonly="readonly" class="form-control text full" />
+    <input type="text" name="file_template" id="file_template" value="<mt:Var name="file_template" encode_html="1" />" readonly="readonly" class="text full" />
   </mtapp:setting>
 
   <script type="text/javascript">
@@ -99,7 +90,7 @@
         $('#' + containerId).remove();
 
         var $container = $('<div>', {id: containerId})
-            .appendTo($('#templatemap-listing'));
+            .appendTo($('#template-listing-form'));
 
         jQuery('input[type=text]').not('[readonly]').each(function() {
             $('<input>', {type: 'hidden', name: 'templatemap_' + this.name + '_' + mapId})
@@ -107,33 +98,28 @@
                 .appendTo($container);
         });
 
-        $.fn.mtModal.close();
+        $.fn.mtDialog.close();
       });
   });
   </script>
-</div>
-</mt:setvarblock>
 
-<mt:setvarblock name="modal_footer">
   <div class="actions-bar">
     <button
        type="submit"
        id="update-button"
        accesskey="s"
        title="<__trans phrase="Update">"
-       class="save action primary button btn btn-primary">
+       class="upload action primary button">
       <__trans phrase="Update">
     </button>
     <button
        type="submit"
        accesskey="x"
-       class="cancel action button btn btn-default"
-       data-mt-modal-close
+       class="cancel action button mt-close-dialog"
        title="<__trans phrase="Cancel (x)">">
       <__trans phrase="Cancel">
     </button>
   </div>
-</mt:setvarblock>
 
-<mt:include name="layout/modal.tmpl">
-<mt:var name="layout">
+</form>
+<mt:include name="dialog/footer.tmpl" >

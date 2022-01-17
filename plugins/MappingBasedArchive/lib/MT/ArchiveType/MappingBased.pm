@@ -10,6 +10,10 @@ sub name {
     return 'MappingBased';
 }
 
+sub order {
+    return 200;
+}
+
 sub archive_label {
     return plugin()->translate('MAPPING_BASED_ADV');
 }
