@@ -44,13 +44,13 @@ Should look like this when installed:
 ## Quick usage
 
 1. Create a custom fields of "Drop Down Menu".
-![Create Custom Field](https://raw.githubusercontent.com/usualoma/mt-plugin-MappingBasedArchive/master/artwork/create-custom-field-shadow.png)
+![Create Custom Field](https://raw.githubusercontent.com/usualoma/mt-plugin-MappingBasedArchive/master/artwork/create-custom-field.png)
 1. Create an archive mapping of "Path Based".
-![Create Archive Mapping](https://raw.githubusercontent.com/usualoma/mt-plugin-MappingBasedArchive/master/artwork/create-archive-mapping-shadow.png)
+![Create Archive Mapping](https://raw.githubusercontent.com/usualoma/mt-plugin-MappingBasedArchive/master/artwork/create-archive-mapping.png)
 1. Choose output path.
-![Choose Output Path](https://raw.githubusercontent.com/usualoma/mt-plugin-MappingBasedArchive/master/artwork/archive-mapping-list-shadow.png)
+![Choose Output Path](https://raw.githubusercontent.com/usualoma/mt-plugin-MappingBasedArchive/master/artwork/screenshot.png)
 1. Click pencil icon, and edit detail settings of a mapping. (advanced)
-![Edit Template Map](https://raw.githubusercontent.com/usualoma/mt-plugin-MappingBasedArchive/master/artwork/edit-template-map-shadow.png)
+![Edit Template Map](https://raw.githubusercontent.com/usualoma/mt-plugin-MappingBasedArchive/master/artwork/edit-template-map.png)
 1. Do save and publish a template.
 1. You can embed links of this archive by using a following snippet.
 ```mtml
