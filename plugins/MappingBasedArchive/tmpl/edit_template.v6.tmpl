@@ -1,0 +1,39 @@
+<mt:SetVarBlock name="js_include" append="1">
+<script type="text/javascript">
+jQuery(function($) {
+    function addEditLink() {
+        $('#templatemap-listing-table td.archive-type').each(function() {
+            var $this = $(this);
+
+            if ($this.find('.icon-ntm-edit').length !== 0) {
+                return false;
+            }
+
+            $('<a>', {'href': '#', 'class': 'icon16 icon-ntm-edit'})
+                .text('<__trans phrase="Edit" escape="js">')
+                .on('click', function() {
+                    var $this = $(this),
+                        blogId = $this.closest('form').find(':input[name=blog_id]').val(),
+                        templatemapId = $this.closest('tr').attr('id');
+
+                    $.fn.mtDialog.open(
+                        ScriptURI + '?__mode=ntm_edit_template_map&blog_id=' + blogId + '&templatemap_id=' + templatemapId
+                    );
+                    return false;
+                })
+                .prependTo($this);
+        });
+    }
+    addEditLink();
+    setInterval(function() {
+        addEditLink();
+    }, 500);
+});
+</script>
+<style type="text/css">
+.icon-ntm-edit {
+    background-image: url(<mt:Var name="static_uri" />images/status_icons/draft.gif);
+}
+</style>
+</mt:SetVarBlock>
+
